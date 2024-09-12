@@ -13,8 +13,9 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <div><DashboardPage /> </div>,
+    // element: <div><DashboardPage /> </div>,
     children: [
+      { path: '/dashboard', element: <div><DashboardPage /> </div> },
       { path: '/dashboard/chats/:id', element: <div><Chatapp /> </div> }
     ]
   } ,
