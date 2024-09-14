@@ -2,7 +2,7 @@
 import React from 'react'
 import './rootlayout.css'
 import { Link, Outlet } from 'react-router-dom'
-import logo from './logo.png'
+import logo from '../../assets/logo.png'
 
 const RootLayout = () => {
     return (
