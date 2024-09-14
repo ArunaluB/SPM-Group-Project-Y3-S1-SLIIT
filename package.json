@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "imagekit-react": "^0.1.0",
     "pro_menter": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
