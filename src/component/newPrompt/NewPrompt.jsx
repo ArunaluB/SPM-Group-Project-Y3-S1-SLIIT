@@ -143,7 +143,7 @@ const NewPrompt = () => {
         ]
     };
 
-    // JavaScript function to handle the download
+
     function downloadTxtFile(codeContent) {
         const blob = new Blob([codeContent], { type: "text/plain" });
         const link = document.createElement("a");
@@ -154,169 +154,171 @@ const NewPrompt = () => {
         document.body.removeChild(link);
     }
 
-
     useEffect(() => {
         if (endRef.current) {
             endRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [questions, answers]);
 
-    const add = async (text) => {
+    // Function to handle code input
+    const handleCodeSubmission = async (text) => {
         setQuestions(text);
-        // const result = await model.generateContent(text);
-        // const response = await result.response;
-        // setAnswers(response.text());
-        // console.log(result.response.text());
-        setAnswers(result);
+        //const result = await model.generateContent(text);
+        setAnswers(result); // Assuming result contains the model's response for code
+    };
+
+    // Function to handle normal word input
+    const handleTextSubmission = async (text) => {
+        setQuestions(text);
+        const result = await model.generateContent(text);
+        const response = await result.response;
+        setAnswers(response.text());
+        console.log(result.response.text());
+    };
+
+    // Function to check if the input contains code (simple check for now)
+    const isCodeInput = (input) => {
+        // You can improve this logic by checking for specific keywords, or use regex
+        return input.includes("function") || input.includes("const") || input.includes("let") || input.includes("return");
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const text = e.target.text.value;
+        const text = e.target.text.value.trim();
+
         if (!text) return;
-        add(text);
-    }
+
+        // Determine if it's a code input or not
+        if (isCodeInput(text)) {
+            handleCodeSubmission(text);
+        } else {
+            handleTextSubmission(text);
+        }
+    };
 
     return (
         <>
             {questions && <div className="message user">{questions}</div>}
-            {/* {answers && (<div className="message">
-                <Markdown>{answers}</Markdown></div>)} */}
-        {answers && (
-    <div className="message">
-        {answers.result.map((step, index) => (
-            <div key={index} className="step-section">
-                {Object.keys(step).map((key, i) => {
-                    const stepData = step[key];
-                    return (
-                        <div key={i} className="step-content">
-                            {/* Step Title */}
-                            <h3 className="step-title">
-                                {stepData.description}
-                            </h3>
 
-                            {/* Code Snippets */}
-                            {stepData.code_snippets &&
-                                stepData.code_snippets.map((snippet, j) => (
-                                    <div key={j} className="code-snippet">
-                                        <p className="snippet-language">
-                                            <strong>Language:</strong> {snippet.language}
-                                        </p>
-                                        <pre className="code-block">
-                                            {snippet.code}
-                                        </pre>
-                                        <p className="snippet-explanation">{snippet.explanation}</p>
-                                    </div>
-                                ))}
+            {/* If it's not a code input, display the answer using the Markdown component */}
+            {answers && typeof answers === 'string' && (
+                <div className="message">
+                    <Markdown>{answers}</Markdown>
+                </div>
+            )}
 
-                            {/* Errors */}
-                            {stepData.errors &&
-                                stepData.errors.map((error, k) => (
-                                    <div key={k} className="error-message">
-                                        <p className="font-bold text-lg">
-                                            <strong>Error:</strong> {error.issue}
-                                        </p>
-                                        <p>{error.description}</p>
-                                        <p>
-                                            <strong>Fix:</strong> {error.fix}
-                                        </p>
-                                    </div>
-                                ))}
+            {/* If it's a code result, show the structured response */}
+            {answers && typeof answers !== 'string' && (
+                <div className="message">
+                    {answers.result.map((step, index) => (
+                        <div key={index} className="step-section">
+                            {Object.keys(step).map((key, i) => {
+                                const stepData = step[key];
+                                return (
+                                    <div key={i} className="step-content">
+                                        <h3 className="step-title">{stepData.description}</h3>
 
-                            {/* Fixes */}
-                            {stepData.fixes &&
-                                stepData.fixes.map((fix, l) => (
-                                    <div key={l} className="fix-message">
-                                        <p className="font-bold text-lg">
-                                            <strong>Fix:</strong> {fix.fix}
-                                        </p>
-                                        <pre className="code-block">
-                                            {fix.code}
-                                        </pre>
-                                    </div>
-                                ))}
+                                        {stepData.code_snippets &&
+                                            stepData.code_snippets.map((snippet, j) => (
+                                                <div key={j} className="code-snippet">
+                                                    <p className="snippet-language">
+                                                        <strong>Language:</strong> {snippet.language}
+                                                    </p>
+                                                    <pre className="code-block">{snippet.code}</pre>
+                                                    <p className="snippet-explanation">{snippet.explanation}</p>
+                                                </div>
+                                            ))}
 
-                            {/* Suggestions */}
-                            {stepData.suggestions && (
-                                <div className="suggestions">
-                                    <h4 className="section-title">Suggestions</h4>
-                                    <ul className="suggestion-list">
-                                        {stepData.suggestions.map((suggestion, m) => (
-                                            <li key={m}>{suggestion}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
+                                        {stepData.errors &&
+                                            stepData.errors.map((error, k) => (
+                                                <div key={k} className="error-message">
+                                                    <p className="font-bold text-lg">
+                                                        <strong>Error:</strong> {error.issue}
+                                                    </p>
+                                                    <p>{error.description}</p>
+                                                    <p><strong>Fix:</strong> {error.fix}</p>
+                                                </div>
+                                            ))}
 
-                            {/* Percentage Estimates */}
-                            {stepData.percentage_estimates && (
-                                <div className="percentage-estimates">
-                                    <ul className="percentage-list">
-                                        {Object.entries(stepData.percentage_estimates).map(
-                                            ([type, percentage], n) => (
-                                                <li key={n}>
-                                                    <strong>{type}:</strong> {percentage}
-                                                </li>
-                                            )
+                                        {stepData.fixes &&
+                                            stepData.fixes.map((fix, l) => (
+                                                <div key={l} className="fix-message">
+                                                    <p className="font-bold text-lg">
+                                                        <strong>Fix:</strong> {fix.fix}
+                                                    </p>
+                                                    <pre className="code-block">{fix.code}</pre>
+                                                </div>
+                                            ))}
+
+                                        {stepData.suggestions && (
+                                            <div className="suggestions">
+                                                <h4 className="section-title">Suggestions</h4>
+                                                <ul className="suggestion-list">
+                                                    {stepData.suggestions.map((suggestion, m) => (
+                                                        <li key={m}>{suggestion}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
                                         )}
-                                    </ul>
-                                </div>
-                            )}
 
-                            {/* Completed Correct Code */}
-                            {stepData.code_snippet && (
-                                <div className="completed-code">
-                                    <h4 className="section-title">Completed Correct Code</h4>
-                                    <pre id={`code-snippet-${index}`} className="code-block">
-                                        {stepData.code_snippet.code}
-                                    </pre>
-                                    <button
-                                        onClick={() => downloadTxtFile(stepData.code_snippet.code)}
-                                        className="button"
-                                    >
-                                        Download Code as .txt
-                                    </button>
-                                </div>
-                            )}
+                                        {stepData.percentage_estimates && (
+                                            <div className="percentage-estimates">
+                                                <ul className="percentage-list">
+                                                    {Object.entries(stepData.percentage_estimates).map(([type, percentage], n) => (
+                                                        <li key={n}>
+                                                            <strong>{type}:</strong> {percentage}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
 
-                            {/* Code Concept Improvements and Advice */}
-                            {stepData.improvements && (
-                                <div className="improvements">
-                                    <h4 className="section-title">
-                                        Code Concept Improvements and Advice
-                                    </h4>
-                                    <ul className="improvement-list">
-                                        {stepData.improvements.map((improvement, o) => (
-                                            <li key={o}>{improvement}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
+                                        {stepData.code_snippet && (
+                                            <div className="completed-code">
+                                                <h4 className="section-title">Completed Correct Code</h4>
+                                                <pre id={`code-snippet-${index}`} className="code-block">
+                                                    {stepData.code_snippet.code}
+                                                </pre>
+                                                <button
+                                                    onClick={() => downloadTxtFile(stepData.code_snippet.code)}
+                                                    className="button"
+                                                >
+                                                    Download Code as .txt
+                                                </button>
+                                            </div>
+                                        )}
 
-                            {/* Tips and Advice */}
-                            {stepData.advice && (
-                                <div className="tips">
-                                    <h4 className="section-title">Tips and Advice</h4>
-                                    <ul className="advice-list">
-                                        {stepData.advice.map((tip, p) => (
-                                            <li key={p}>{tip}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
+                                        {stepData.improvements && (
+                                            <div className="improvements">
+                                                <h4 className="section-title">Code Concept Improvements and Advice</h4>
+                                                <ul className="improvement-list">
+                                                    {stepData.improvements.map((improvement, o) => (
+                                                        <li key={o}>{improvement}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {stepData.advice && (
+                                            <div className="tips">
+                                                <h4 className="section-title">Tips and Advice</h4>
+                                                <ul className="advice-list">
+                                                    {stepData.advice.map((tip, p) => (
+                                                        <li key={p}>{tip}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
-                    );
-                })}
-            </div>
-        ))}
-    </div>
-)}
-
-
-
-
+                    ))}
+                </div>
+            )}
 
             <div className="endChat" ref={endRef}></div>
+
             <form className="newForm" onSubmit={handleSubmit}>
                 <input type="text" name='text' placeholder="Ask me Error or Help" />
                 <button type="submit">
