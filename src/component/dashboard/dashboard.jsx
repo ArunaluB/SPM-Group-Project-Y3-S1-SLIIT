@@ -21,7 +21,7 @@ const dashboard = () => {
           </div>
           <div className="option">
             <img src={img2} alt="option 1" />
-            <span>Upload Image</span>
+            <span>Download Report</span>
           </div>
           <div className="option">
             <img src={img3} alt="option 1" />
