@@ -33,10 +33,10 @@ const Home = () => {
             <img
               src={
                 typingStatus === "human1"
-                  ?  humen1 
+                  ? humen1
                   : typingStatus === "human2"
-                  ? humen2
-                  : MainL
+                    ? humen2
+                    : MainL
               }
               alt=""
             />
