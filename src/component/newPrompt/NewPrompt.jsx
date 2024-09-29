@@ -10,138 +10,138 @@ const NewPrompt = () => {
     const [questions, setQuestions] = useState("");
     const [answers, setAnswers] = useState("");
 
-    const result = {
-        "result": [
-            {
-                "step_1": {
-                    "description": "Explanation of the code",
-                    "code_snippets": [
-                        {
-                            "language": "jsx",
-                            "code": "/* eslint-disable no-unused-vars */",
-                            "explanation": "This disables the ESLint rule that warns about unused variables."
-                        },
-                        {
-                            "language": "jsx",
-                            "code": "import React from 'react';\nimport './dashboard.css';\nimport logo from '../../assets/logo.png';\nimport img1 from '../../assets/chat.png';\nimport img2 from '../../assets/image.png';\nimport img3 from '../../assets/code.png';\nimport buttonimg from '../../assets/arrow.png';",
-                            "explanation": "Imports React, CSS for styling, and image assets."
-                        },
-                        {
-                            "language": "jsx",
-                            "code": "const dashboard = () => {",
-                            "explanation": "Declares the dashboard component."
-                        },
-                        {
-                            "language": "jsx",
-                            "code": "return (\n    <div className=\"dashboardPage\">",
-                            "explanation": "Returns JSX code which defines how the component is rendered."
-                        },
-                        {
-                            "language": "jsx",
-                            "code": "<div className=\"texts\">\n    <div className=\"logo\">\n      <img src={logo} alt=\"logo\" />\n      <h1>PRO MENTER</h1>\n</div>",
-                            "explanation": "Renders the logo and the title in a div container."
-                        },
-                        {
-                            "language": "jsx",
-                            "code": "<div className=\"options\">\n  <div className=\"option\">\n    <img src={img1} alt=\"option 1\" />\n    <span>Create a New Chat</span>\n  </div>\n  <div className=\"option\">\n    <img src={img2} alt=\"option 2\" />\n    <span>Download Report</span>\n  </div>\n  <div className=\"option\">\n    <img src={img3} alt=\"option 3\" />\n    <span>Help me with my Code</span>\n  </div>\n</div>",
-                            "explanation": "Creates three dashboard options, each with an image and a text description."
-                        },
-                        {
-                            "language": "jsx",
-                            "code": "<div className=\"formContainer\">\n  <form action=\"\">\n    <input type=\"text\" placeholder='Ask me Error or Help' />\n    <button>\n      <img src={buttonimg} alt=\"submit\" />\n    </button>\n  </form>\n</div>",
-                            "explanation": "Creates a form with a text input field and a submit button."
-                        },
-                        {
-                            "language": "jsx",
-                            "code": "export default dashboard;",
-                            "explanation": "Exports the dashboard component."
-                        }
-                    ]
-                },
-                "step_2": {
-                    "description": "Identify and explain errors",
-                    "errors": [
-                        {
-                            "issue": "Component naming convention error",
-                            "description": "Component name should start with a capital letter.",
-                            "fix": "Rename 'dashboard' to 'Dashboard'."
-                        },
-                        {
-                            "issue": "Missing key prop for list items",
-                            "description": "Repetitive elements need a key prop.",
-                            "fix": "Add a unique key prop to each option."
-                        },
-                        {
-                            "issue": "Unused eslint-disable comment",
-                            "description": "The ESLint disable comment is unnecessary.",
-                            "fix": "Remove the /* eslint-disable no-unused-vars */ line if not needed."
-                        },
-                        {
-                            "issue": "Alt attribute repetition",
-                            "description": "Generic alt text for images.",
-                            "fix": "Use descriptive alt text for accessibility."
-                        }
-                    ]
-                },
-                "step_3": {
-                    "description": "One-by-one error fix",
-                    "fixes": [
-                        {
-                            "fix": "Rename the component from 'dashboard' to 'Dashboard'.",
-                            "code": "const Dashboard = () => {}"
-                        },
-                        {
-                            "fix": "Add key props to each option.",
-                            "code": "<div className=\"option\" key=\"chat\">\n  <img src={img1} alt=\"Create Chat\" />\n  <span>Create a New Chat</span>\n</div>"
-                        },
-                        {
-                            "fix": "Remove the ESLint disable comment.",
-                            "code": "// Remove this line"
-                        }
-                    ]
-                },
-                "step_4": {
-                    "description": "Best practices and improvements",
-                    "suggestions": [
-                        "Component naming: Capitalize component names.",
-                        "Unique keys for lists: Use unique key props for repeated elements.",
-                        "Accessibility improvements: Use descriptive alt text for images.",
-                        "Form improvements: Add an onSubmit handler for form submissions."
-                    ]
-                },
-                "step_5": {
-                    "description": "Estimate of error percentage",
-                    "percentage_estimates": {
-                        "syntax_error": "2%",
-                        "common_error": "3%",
-                        "logical_error": "0%"
-                    }
-                },
-                "step_6": {
-                    "description": "Completed correct code",
-                    "code_snippet": {
-                        "language": "jsx",
-                        "code": "import React from 'react';\nimport './dashboard.css';\nimport logo from '../../assets/logo.png';\nimport img1 from '../../assets/chat.png';\nimport img2 from '../../assets/image.png';\nimport img3 from '../../assets/code.png';\nimport buttonimg from '../../assets/arrow.png';\n\nconst Dashboard = () => {\n  return (\n    <div className=\"dashboardPage\">\n      <div className=\"texts\">\n        <div className=\"logo\">\n          <img src={logo} alt=\"logo\" />\n          <h1>PRO MENTER</h1>\n        </div>\n        <div className=\"options\">\n          <div className=\"option\" key=\"chat\">\n            <img src={img1} alt=\"Create a New Chat\" />\n            <span>Create a New Chat</span>\n          </div>\n          <div className=\"option\" key=\"report\">\n            <img src={img2} alt=\"Download Report\" />\n            <span>Download Report</span>\n          </div>\n          <div className=\"option\" key=\"code\">\n            <img src={img3} alt=\"Help me with Code\" />\n            <span>Help me with my Code</span>\n          </div>\n        </div>\n      </div>\n      <div className=\"formContainer\">\n        <form action=\"\" onSubmit={(e) => e.preventDefault()}>\n          <input type=\"text\" placeholder='Ask me Error or Help' />\n          <button>\n            <img src={buttonimg} alt=\"submit\" />\n          </button>\n        </form>\n      </div>\n    </div>\n  );\n};\n\nexport default Dashboard;"
-                    }
-                },
-                "step_7": {
-                    "description": "Code concept improvements and advice",
-                    "improvements": [
-                        "Form handling: Add event handling for form submissions.",
-                        "Component reuse: Consider abstracting repeated components."
-                    ]
-                },
-                "step_8": {
-                    "description": "Tips and advice",
-                    "advice": [
-                        "Break large components into smaller ones for better modularity.",
-                        "Use state management like useState for handling state.",
-                        "Keep styles modular and reusable."
-                    ]
-                }
-            }
-        ]
-    };
+    // // const result = {
+    //     "result": [
+    //         {
+    //             "step_1": {
+    //                 "description": "Explanation of the code",
+    //                 "code_snippets": [
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "/* eslint-disable no-unused-vars */",
+    //                         "explanation": "This disables the ESLint rule that warns about unused variables."
+    //                     },
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "import React from 'react';\nimport './dashboard.css';\nimport logo from '../../assets/logo.png';\nimport img1 from '../../assets/chat.png';\nimport img2 from '../../assets/image.png';\nimport img3 from '../../assets/code.png';\nimport buttonimg from '../../assets/arrow.png';",
+    //                         "explanation": "Imports React, CSS for styling, and image assets."
+    //                     },
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "const dashboard = () => {",
+    //                         "explanation": "Declares the dashboard component."
+    //                     },
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "return (\n    <div className=\"dashboardPage\">",
+    //                         "explanation": "Returns JSX code which defines how the component is rendered."
+    //                     },
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "<div className=\"texts\">\n    <div className=\"logo\">\n      <img src={logo} alt=\"logo\" />\n      <h1>PRO MENTER</h1>\n</div>",
+    //                         "explanation": "Renders the logo and the title in a div container."
+    //                     },
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "<div className=\"options\">\n  <div className=\"option\">\n    <img src={img1} alt=\"option 1\" />\n    <span>Create a New Chat</span>\n  </div>\n  <div className=\"option\">\n    <img src={img2} alt=\"option 2\" />\n    <span>Download Report</span>\n  </div>\n  <div className=\"option\">\n    <img src={img3} alt=\"option 3\" />\n    <span>Help me with my Code</span>\n  </div>\n</div>",
+    //                         "explanation": "Creates three dashboard options, each with an image and a text description."
+    //                     },
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "<div className=\"formContainer\">\n  <form action=\"\">\n    <input type=\"text\" placeholder='Ask me Error or Help' />\n    <button>\n      <img src={buttonimg} alt=\"submit\" />\n    </button>\n  </form>\n</div>",
+    //                         "explanation": "Creates a form with a text input field and a submit button."
+    //                     },
+    //                     {
+    //                         "language": "jsx",
+    //                         "code": "export default dashboard;",
+    //                         "explanation": "Exports the dashboard component."
+    //                     }
+    //                 ]
+    //             },
+    //             "step_2": {
+    //                 "description": "Identify and explain errors",
+    //                 "errors": [
+    //                     {
+    //                         "issue": "Component naming convention error",
+    //                         "description": "Component name should start with a capital letter.",
+    //                         "fix": "Rename 'dashboard' to 'Dashboard'."
+    //                     },
+    //                     {
+    //                         "issue": "Missing key prop for list items",
+    //                         "description": "Repetitive elements need a key prop.",
+    //                         "fix": "Add a unique key prop to each option."
+    //                     },
+    //                     {
+    //                         "issue": "Unused eslint-disable comment",
+    //                         "description": "The ESLint disable comment is unnecessary.",
+    //                         "fix": "Remove the /* eslint-disable no-unused-vars */ line if not needed."
+    //                     },
+    //                     {
+    //                         "issue": "Alt attribute repetition",
+    //                         "description": "Generic alt text for images.",
+    //                         "fix": "Use descriptive alt text for accessibility."
+    //                     }
+    //                 ]
+    //             },
+    //             "step_3": {
+    //                 "description": "One-by-one error fix",
+    //                 "fixes": [
+    //                     {
+    //                         "fix": "Rename the component from 'dashboard' to 'Dashboard'.",
+    //                         "code": "const Dashboard = () => {}"
+    //                     },
+    //                     {
+    //                         "fix": "Add key props to each option.",
+    //                         "code": "<div className=\"option\" key=\"chat\">\n  <img src={img1} alt=\"Create Chat\" />\n  <span>Create a New Chat</span>\n</div>"
+    //                     },
+    //                     {
+    //                         "fix": "Remove the ESLint disable comment.",
+    //                         "code": "// Remove this line"
+    //                     }
+    //                 ]
+    //             },
+    //             "step_4": {
+    //                 "description": "Best practices and improvements",
+    //                 "suggestions": [
+    //                     "Component naming: Capitalize component names.",
+    //                     "Unique keys for lists: Use unique key props for repeated elements.",
+    //                     "Accessibility improvements: Use descriptive alt text for images.",
+    //                     "Form improvements: Add an onSubmit handler for form submissions."
+    //                 ]
+    //             },
+    //             "step_5": {
+    //                 "description": "Estimate of error percentage",
+    //                 "percentage_estimates": {
+    //                     "syntax_error": "2%",
+    //                     "common_error": "3%",
+    //                     "logical_error": "0%"
+    //                 }
+    //             },
+    //             "step_6": {
+    //                 "description": "Completed correct code",
+    //                 "code_snippet": {
+    //                     "language": "jsx",
+    //                     "code": "import React from 'react';\nimport './dashboard.css';\nimport logo from '../../assets/logo.png';\nimport img1 from '../../assets/chat.png';\nimport img2 from '../../assets/image.png';\nimport img3 from '../../assets/code.png';\nimport buttonimg from '../../assets/arrow.png';\n\nconst Dashboard = () => {\n  return (\n    <div className=\"dashboardPage\">\n      <div className=\"texts\">\n        <div className=\"logo\">\n          <img src={logo} alt=\"logo\" />\n          <h1>PRO MENTER</h1>\n        </div>\n        <div className=\"options\">\n          <div className=\"option\" key=\"chat\">\n            <img src={img1} alt=\"Create a New Chat\" />\n            <span>Create a New Chat</span>\n          </div>\n          <div className=\"option\" key=\"report\">\n            <img src={img2} alt=\"Download Report\" />\n            <span>Download Report</span>\n          </div>\n          <div className=\"option\" key=\"code\">\n            <img src={img3} alt=\"Help me with Code\" />\n            <span>Help me with my Code</span>\n          </div>\n        </div>\n      </div>\n      <div className=\"formContainer\">\n        <form action=\"\" onSubmit={(e) => e.preventDefault()}>\n          <input type=\"text\" placeholder='Ask me Error or Help' />\n          <button>\n            <img src={buttonimg} alt=\"submit\" />\n          </button>\n        </form>\n      </div>\n    </div>\n  );\n};\n\nexport default Dashboard;"
+    //                 }
+    //             },
+    //             "step_7": {
+    //                 "description": "Code concept improvements and advice",
+    //                 "improvements": [
+    //                     "Form handling: Add event handling for form submissions.",
+    //                     "Component reuse: Consider abstracting repeated components."
+    //                 ]
+    //             },
+    //             "step_8": {
+    //                 "description": "Tips and advice",
+    //                 "advice": [
+    //                     "Break large components into smaller ones for better modularity.",
+    //                     "Use state management like useState for handling state.",
+    //                     "Keep styles modular and reusable."
+    //                 ]
+    //             }
+    //         }
+    //     ]
+    // };
 
 
     function downloadTxtFile(codeContent) {
@@ -160,12 +160,51 @@ const NewPrompt = () => {
         }
     }, [questions, answers]);
 
-    // Function to handle code input
     const handleCodeSubmission = async (text) => {
         setQuestions(text);
-        //const result = await model.generateContent(text);
-        setAnswers(result); // Assuming result contains the model's response for code
+        const result = await model.generateContent(text);
+        const resultForCode = await resultobjectgenarater(result.response.text());
+        console.log(resultForCode);
+        setAnswers(resultForCode); // Assuming result contains the model's response for code
     };
+
+    
+    const resultobjectgenarater = async (text) => {
+        const prompt = `json object generate this data include json name result and step step separate show 
+==========example json obj==========
+
+        "result": [
+            {
+                "step_1": {
+                    "description": "Explanation of the code",
+                    "code_snippets": [
+                        {
+                            "language": "jsx",
+                            "code": "/* eslint-disable no-unused-vars */",
+                            "explanation": "This disables the ESLint rule that warns about unused variables."
+                        },
+                        
+                    ]
+                },
+                "step_2": {
+                    "description": "Identify and explain errors",
+                    "errors": [
+                        {
+                            "issue": "Component naming convention error",
+                            "description": "Component name should start with a capital letter.",
+                            "fix": "Rename 'dashboard' to 'Dashboard'."
+                        },
+                       
+                    ]
+                },
+                
+    };`
+    const go = text + prompt;
+    const result = await model.generateContent(go);
+    const response = await result.response;
+    console.log(result.response.text());
+    return result.response.text();
+    }
 
     // Function to handle normal word input
     const handleTextSubmission = async (text) => {
@@ -182,7 +221,7 @@ const NewPrompt = () => {
         return input.includes("function") || input.includes("const") || input.includes("let") || input.includes("return");
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const text = e.target.text.value.trim();
 
@@ -194,6 +233,8 @@ const NewPrompt = () => {
         } else {
             handleTextSubmission(text);
         }
+
+        
     };
 
     return (
